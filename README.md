@@ -1,4 +1,16 @@
-This is a demo that showcases using CopilotKit to build a PowerPoint like web app.
+This is a demo that showcases using CopilotKit to build an Excel like web app.
+
+## Run the live demo
+
+Want to see CopilotKit in action? Click the button below to try the live demo.
+
+<a href="https://spreadsheet-demo-tau.vercel.app">
+  <img src="./public/screenshot.png" alt="Spreadsheet Demo Screenshot" width="600px">
+</a>
+
+<a href="https://spreadsheet-demo-tau.vercel.app">
+  <img src="./public/run-demo-cta.png" alt="Run the live demo" width="250px">
+</a>
 
 ## Deploy with Vercel
 
