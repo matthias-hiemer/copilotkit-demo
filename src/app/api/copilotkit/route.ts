@@ -1,6 +1,12 @@
-import { CopilotRuntime, OpenAIAdapter } from "@copilotkit/backend";
 import { Action } from "@copilotkit/shared";
 import { researchWithLangGraph } from "./research";
+
+import { NextRequest } from "next/server";
+import {
+  CopilotRuntime,
+  OpenAIAdapter,
+  copilotRuntimeNextJSAppRouterEndpoint,
+} from "@copilotkit/runtime";
 
 const researchAction: Action<any> = {
   name: "research",
@@ -19,7 +25,7 @@ const researchAction: Action<any> = {
   },
 };
 
-export async function POST(req: Request): Promise<Response> {
+export const POST = async (req: NextRequest) => {
   const actions: Action<any>[] = [];
   if (
     process.env["TAVILY_API_KEY"] &&
@@ -27,9 +33,12 @@ export async function POST(req: Request): Promise<Response> {
   ) {
     actions.push(researchAction);
   }
-  const copilotKit = new CopilotRuntime({
-    actions: actions,
+  const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
+    runtime: new CopilotRuntime({
+      actions: actions,
+    }),
+    serviceAdapter: new OpenAIAdapter(),
+    endpoint: req.nextUrl.pathname,
   });
-
-  return copilotKit.response(req, new OpenAIAdapter());
-}
+  return handleRequest(req);
+};
